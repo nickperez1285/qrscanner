@@ -22,6 +22,7 @@ const StatusLogger = () => {
 	var handleScan = (data) => {
 		if (data && cam) {
 			setState({ ...state, orderID: data });
+
 			getStatus(data);
 		}
 	};
@@ -121,10 +122,8 @@ const StatusLogger = () => {
 	return (
 		<div className="card col-12 col-lg-4 login-card mt-2 hv-center">
 			<form>
-				<div>
-					<h2>Order:{state.orderID}</h2>
-				</div>
-				<h3>Current Status:{status}</h3>
+				<div>{state.orderID ? <h2>Order:{state.orderID}</h2> : null}</div>
+				{state.orderID ? <h2>Current Status:{status}</h2> : <p>Press Scan When Ready</p>}
 
 				<div className="form-group text-left">
 					{/* <label htmlFor="exampleInputEmail1">Order Code</label>
@@ -153,11 +152,15 @@ const StatusLogger = () => {
 			</button>
 			<FormControl component="fieldset">
 				<RadioGroup style={{ display: "flex", flexDirection: "row" }} name="Status" onChange={handleChange}>
-					<FormControlLabel value="order received, " control={<Radio />} label="Order Received," />
-					<FormControlLabel value="cooking" control={<Radio />} label="Cooking" />
-					<FormControlLabel value="left kitchen, " control={<Radio />} label="Left Kitchen" />
-					<FormControlLabel value="on campus" control={<Radio />} label="On Campus" />
-					<FormControlLabel value="delivered" control={<Radio />} label="Delivered" />
+					<FormControlLabel
+						value={{ code: 1, status: "order received" }}
+						control={<Radio />}
+						label="1.Order Received,"
+					/>
+					<FormControlLabel value={{ code: 2, status: "cooking" }} control={<Radio />} label="2.Cooking" />
+					<FormControlLabel value={{ code: 3, status: "left kitchen" }} control={<Radio />} label="3.Left Kitchen" />
+					<FormControlLabel value={{ code: 4, status: "on campus" }} control={<Radio />} label="4.On Campus" />
+					<FormControlLabel value={{ code: 5, status: "delivered" }} control={<Radio />} label="5.Delivered" />
 				</RadioGroup>
 			</FormControl>
 
