@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { RadioGroup, FormLabel, FormControl, FormControlLabel, Radio } from "@material-ui/core";
 import QrReader from "react-qr-reader";
 import Axios from "axios";
@@ -86,6 +86,7 @@ const StatusLogger = (props) => {
 			<button type="submit" style={{ width: "10%", alignSelf: "center" }} onClick={() => toggleCam()}>
 				Scan
 			</button>
+			{/* <Route exact path="/" render={() => (window.location = "https://redirectsite.com")} /> */}
 			<FormControl component="fieldset">
 				<RadioGroup
 					style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}
@@ -104,19 +105,33 @@ const StatusLogger = (props) => {
 			</FormControl>
 
 			{cam && (
-				<div>
-					<QrReader delay={300} onError={handleError} onScan={handleScan} style={{ width: 200, height: 100 }} />
+				<div
+					style={{
+						left: 100,
+						display: "flex",
+						alignContent: "center",
+						alignItems: "center",
+						alignSelf: "center",
+						flexDirection: "column",
+					}}>
+					<button
+						style={{ width: "50%", alignSelf: "center", margin: 10 }}
+						type="submit"
+						className="btn btn-primary"
+						onClick={() => updateStatus()}>
+						Update
+					</button>
+					<QrReader
+						delay={300}
+						onError={handleError}
+						onScan={handleScan}
+						style={{ alignSelf: "center", width: 200, height: 100 }}
+					/>
 					{/* <Qrscanner /> */}
 				</div>
 			)}
 			<br></br>
-			<button
-				style={{ width: "10%", alignSelf: "center" }}
-				type="submit"
-				className="btn btn-primary"
-				onClick={() => updateStatus()}>
-				Update
-			</button>
+			<a href="https://www.qr-code-generator.com/free-generator/">Create QR code </a>
 		</div>
 	);
 };
