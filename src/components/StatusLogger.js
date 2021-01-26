@@ -64,60 +64,10 @@ const StatusLogger = (props) => {
 				mode: "cors",
 				body: body,
 			})
-				.then((res) => (res.status == 200 ? alert("Updated Successfully") : alert("failed to update")))
+				.then((res) => (res.status == 200 ? alert("Updated Successfully") : console.log(res, "res from update status")))
 				.catch((err) => alert(err));
 		}
 	};
-	// useEffect(() => {
-	// 	if (state.orderID !== undefined && state.ready) {
-	// 		getStatus(state.orderID);
-	// 	}
-	// }, [state.orderID]);
-	// const sendDetailsToServer = () => {
-	// 	if (state.email.length && state.password.length) {
-	// 		props.showError(null);
-	// 		const payload = {
-	// 			email: state.email,
-	// 			password: state.password,
-	// 		};
-	// 		axios
-	// 			.post(API_BASE_URL + "/user/register", payload)
-	// 			.then(function (response) {
-	// 				if (response.status === 200) {
-	// 					setState((prevState) => ({
-	// 						...prevState,
-	// 						successMessage: "Registration successful. Redirecting to home page..",
-	// 					}));
-	// 					localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
-	// 					redirectToHome();
-	// 					props.showError(null);
-	// 				} else {
-	// 					props.showError("Some error ocurred");
-	// 				}
-	// 			})
-	// 			.catch(function (error) {
-	// 				console.log(error);
-	// 			});
-	// 	} else {
-	// 		props.showError("Please enter valid username and password");
-	// 	}
-	// };
-	// const redirectToHome = () => {
-	// 	props.updateTitle("Home");
-	// 	props.history.push("/home");
-	// };
-	// const redirectToLogin = () => {
-	// 	props.updateTitle("Login");
-	// 	props.history.push("/login");
-	// };
-	// const handleSubmitClick = (e) => {
-	// 	e.preventDefault();
-	// 	if (state.password === state.confirmPassword) {
-	// 		sendDetailsToServer();
-	// 	} else {
-	// 		props.showError("Passwords do not match");
-	// 	}
-	// };
 
 	return (
 		<div style={{ display: "flex", flexDirection: "column", alignContent: "center" }}>
