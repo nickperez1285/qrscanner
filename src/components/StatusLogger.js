@@ -5,7 +5,7 @@ import QrReader from "react-qr-reader";
 import Axios from "axios";
 import Qrscanner from "./Qrscanner";
 
-const StatusLogger = () => {
+const StatusLogger = (props) => {
 	const [state, setState] = useState({
 		email: "",
 		password: "",
@@ -141,19 +141,15 @@ const StatusLogger = () => {
 					style={{ display: "flex", flexDirection: "column", alignSelf: "center" }}
 					name="Status"
 					onChange={handleChange}>
-					<FormControlLabel
-						checked={state.status}
-						value="Order Received"
-						control={<Radio />}
-						label="1.Order Received"
-					/>
+					{/* onChange={console.log(props)}> */}
+					<FormControlLabel value="Order Received" control={<Radio />} label="1.Order Received" />
 					{/* <FormControlLabel value={{ code: 2, status: "cooking" }} control={<Radio />} label="2.Cooking" /> */}
-					<FormControlLabel checked={state.status} value="Cooking" control={<Radio />} label="2.Cooking" />
+					<FormControlLabel value="Cooking" control={<Radio />} label="2.Cooking" />
 					{/* <FormControlLabel value={{ code: 3, status: "left kitchen" }} control={<Radio />} label="3.Left Kitchen" /> */}
-					<FormControlLabel checked={state.status} value="Left Kitchen" control={<Radio />} label="3.Left Kitchen" />
-					<FormControlLabel checked={state.status} value="On Campus" control={<Radio />} label="4.On Campus" />
+					<FormControlLabel value="Left Kitchen" control={<Radio />} label="3.Left Kitchen" />
+					<FormControlLabel value="On Campus" control={<Radio />} label="4.On Campus" />
 					{/* <FormControlLabel value={{ code: 5, status: "delivered" }} control={<Radio />} label="5.Delivered" /> */}
-					<FormControlLabel checked={state.status} value="Delivered" control={<Radio />} label="5.Delivered" />
+					<FormControlLabel value="Delivered" control={<Radio />} label="5.Delivered" />
 				</RadioGroup>
 			</FormControl>
 
