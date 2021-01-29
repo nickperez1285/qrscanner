@@ -20,6 +20,7 @@ const StatusLogger = (props) => {
 	const [cam, setCam] = useState(false);
 
 	var handleScan = (data) => {
+		console.log(data, "data");
 		if (data && cam) {
 			setState({ ...state, orderID: data });
 
@@ -57,7 +58,7 @@ const StatusLogger = (props) => {
 
 	const updateStatus = (id) => {
 		if (state.orderID !== undefined) {
-			let body = JSON.stringify({ delivery_id: state.orderID, kitchen_status: status });
+			let body = JSON.stringify({ kitchen_delivery_id: state.orderID, kitchen_status: status });
 			console.log(body);
 			fetch("https://us-central1-saymile-a29fa.cloudfunctions.net/api/updateKitchenStatus", {
 				method: "POST",
@@ -114,13 +115,6 @@ const StatusLogger = (props) => {
 						alignSelf: "center",
 						flexDirection: "column",
 					}}>
-					<button
-						style={{ width: "50%", alignSelf: "center", margin: 10 }}
-						type="submit"
-						className="btn btn-primary"
-						onClick={() => updateStatus()}>
-						Update
-					</button>
 					<QrReader
 						delay={300}
 						onError={handleError}
@@ -130,6 +124,13 @@ const StatusLogger = (props) => {
 					{/* <Qrscanner /> */}
 				</div>
 			)}
+			<button
+				style={{ width: "10%", alignSelf: "center", margin: 10 }}
+				type="submit"
+				className="btn btn-primary"
+				onClick={() => updateStatus()}>
+				Update
+			</button>
 			<br></br>
 			<a href="https://www.qr-code-generator.com/free-generator/">Create QR code </a>
 		</div>
