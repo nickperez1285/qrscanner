@@ -4,6 +4,7 @@ import { RadioGroup, FormLabel, FormControl, FormControlLabel, Radio } from "@ma
 import QrReader from "react-qr-reader";
 import Axios from "axios";
 import Qrscanner from "./Qrscanner";
+import Table from "react-bootstrap/Table";
 
 const StatusLogger = (props) => {
 	const [state, setState] = useState({
@@ -18,6 +19,8 @@ const StatusLogger = (props) => {
 
 	const [status, setStatus] = useState("");
 	const [cam, setCam] = useState(false);
+	const [orders, setOrders] = useState([]);
+	const [ready, setReady] = useState(false);
 
 	var handleScan = (data) => {
 		console.log(data, "data");
@@ -70,6 +73,22 @@ const StatusLogger = (props) => {
 		}
 	};
 
+	const pullOrders = async () => {
+		const response = await Axios.get(
+			"http://us-central1-saymile-a29fa.cloudfunctions.net/api/getAllincompleteDelivery"
+		);
+		const data = await response;
+		console.log(data.data);
+		return setOrders(data.data.all_orders);
+	};
+	useEffect(() => {
+		if (orders.length < 1) {
+			pullOrders();
+			setReady(true);
+			console.log(orders);
+		}
+	}, [orders, pullOrders]);
+
 	return (
 		<div style={{ display: "flex", flexDirection: "column", alignContent: "center" }}>
 			<form>
@@ -84,6 +103,14 @@ const StatusLogger = (props) => {
 				role="alert">
 				{state.successMessage}
 			</div>
+			{/* <button
+				onClick={() => {
+					pullOrders();
+				}}
+				style={{ width: " 20%", alignSelf: "center" }}>
+				Get Orders
+			</button> */}
+
 			<button type="submit" style={{ width: "10%", alignSelf: "center" }} onClick={() => toggleCam()}>
 				Scan
 			</button>
@@ -133,6 +160,15 @@ const StatusLogger = (props) => {
 			</button>
 			<br></br>
 			<a href="https://www.qr-code-generator.com/free-generator/">Create QR code </a>
+			<div style={{ borderWidth: 2, display: "flex", flex: 1, flexDirection: "column" }}>
+				{orders.length > 0 &&
+					orders.map((or) => (
+						<div style={{ display: "flex", flexDirection: "column", flex: 1, borderWidth: 2, margin: 10 }}>
+							<div>ID:{or.kitchen_delivery_id + "\n"}</div>
+							<div>STATUS:{or.kitchen_status}</div>
+						</div>
+					))}
+			</div>
 		</div>
 	);
 };
